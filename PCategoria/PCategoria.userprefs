@@ -1,9 +1,19 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="PCategoria/Main.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="PCategoria/MainWindow.cs">
     <Files>
       <File FileName="PCategoria/Main.cs" Line="15" Column="3" />
+      <File FileName="PCategoria/MainWindow.cs" Line="26" Column="24" />
     </Files>
+    <Pads>
+      <Pad Id="ConnectionManagerPad">
+        <State expanded="True">
+          <Node name="Localhost aula" expanded="True">
+            <Node name="Tablas" expanded="True" />
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

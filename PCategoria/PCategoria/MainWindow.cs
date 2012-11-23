@@ -35,6 +35,7 @@ public partial class MainWindow: Gtk.Window
 		
 		}
 		
+		dataReader.Close();
 		dbConnection.Close ();
 		
 		
