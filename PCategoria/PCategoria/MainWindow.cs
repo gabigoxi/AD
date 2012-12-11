@@ -1,49 +1,48 @@
-using System;
-using Npgsql;
 using Gtk;
+using Npgsql;
+using System;
 using System.Data;
+using System.Collections.Generic; 
 
 public partial class MainWindow: Gtk.Window
 {	
+		private ListStore listStore;		
+
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		
-		fillComboBox ();
+		fillComboBox();	
+
 	}
-	
-	private void fillComboBox(){
+		private void fillComboBox(){
+
+
+		CellRenderer  cellRenderer2 = new CellRendererText();
+		comboBox.PackStart(cellRenderer2, false); 
+		comboBox.AddAttribute(cellRenderer2, "text", 1);
+
+
+		listStore = new ListStore(typeof(string), typeof(string));
+		comboBox.Model = listStore;
+
 		
-		CellRenderer cellRenderer = new CellRendererText();
-		comboBox.PackStart (cellRenderer, false);
-		comboBox.AddAttribute (cellRenderer, "text", 1);
-		
-		ListStore listStore = new ListStore(typeof(string), typeof(string));
-		
-		string connectionString = "Server=localhost;Database=aula;User Id=aula;Password=clase";
+		String connectionString = "Server=localhost;Database=aula;User Id=aula;Password=clase";
 		IDbConnection dbConnection = new NpgsqlConnection(connectionString);
-		
-		dbConnection.Open ();
-		
-		IDbCommand dbCommand = dbConnection.CreateCommand ();
-		dbCommand.CommandText = "select id, nombre from categoria";
-		
+		dbConnection.Open();
+
+		IDbCommand dbCommand = dbConnection.CreateCommand();
+		dbCommand.CommandText="select * from categoria";
 		IDataReader dataReader = dbCommand.ExecuteReader();
-		
-		while (dataReader.Read ()) {
-			listStore.AppendValues (dataReader["id"].ToString (), dataReader["nombre"].ToString() );
-		
-		}
-		
+
+
+		while(dataReader.Read())
+			listStore.AppendValues(dataReader["id"].ToString(), dataReader["nombre"].ToString());
+
+
+
 		dataReader.Close();
-		dbConnection.Close ();
-		
-		
-	} 
-	
-	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
-	{
-		Application.Quit ();
-		a.RetVal = true;
+		dbConnection.Close();
+
 	}
+
 }
