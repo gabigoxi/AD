@@ -1,69 +1,76 @@
-using System;
 using Gtk;
 using Npgsql;
-using System.Data;
+using PArticulo;
+using Serpis.Ad;
+using System;
 using System.Collections.Generic;
+using System.Data;
+
 
 public partial class MainWindow: Gtk.Window
-{	
+{
+	private IDbConnection dbConnection;
 	public MainWindow (): base (Gtk.WindowType.Toplevel)
 	{
 		Build ();
-		//Movemos esto abajo para coger directamente la informacion del dataReader:
-		//treeView.AppendColumn("Identificador", new CellRendererText(), "text", 0);
-		//treeView.AppendColumn("Nombre", new CellRendererText(), "text", 1);
-		//treeView.AppendColumn("Precio", new CellRendererText(), "text", 2);
-		//treeView.AppendColumn("Categoría", new CellRendererText(), "text", 3);
-
-
-		ListStore listStore = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
-		treeView.Model = listStore;
 		
-
 		string connectionString = "Server=localhost;Database=aula;User Id=aula;Password=clase";
-		IDbConnection dbConnection = new NpgsqlConnection(connectionString);
-		dbConnection.Open();
-
-		IDbCommand dbCommand = dbConnection.CreateCommand();
-		dbCommand.CommandText="select * from articulo";
-
-		IDataReader dataReader = dbCommand.ExecuteReader();
-
-		/*Lo pegamos aqui*/
-		//treeView.AppendColumn("Identificador", new CellRendererText(), "text", 0);
-		//treeView.AppendColumn("Nombre", new CellRendererText(), "text", 1);
-		//treeView.AppendColumn("Precio", new CellRendererText(), "text", 2);
-		//treeView.AppendColumn("Categoría", new CellRendererText(), "text", 3);
-
-		List<Type> types = new List<Type>();
-
-		for (int index =0; index < dataReader.FieldCount; index++)
-			treeView.AppendColumn(dataReader.GetName(index), new CellRendererText(), "text", index);
-		types.Add (typeof(string));
-		//types[index] = typeof(string);
-
-
-
-		//ListStore listStore = new ListStore(types.ToArray());
-
-		//ListStore listStore = new ListStore(typeof(string), typeof(string), typeof(string), typeof(string));
-		treeView.Model = listStore;
-		///////////////////////////////////////////////
-
-		while(dataReader.Read())
-			listStore.AppendValues(dataReader[0].ToString(), dataReader[1].ToString(),
-			                       	dataReader[2].ToString(), dataReader[3].ToString());
-		//Funciona igual si  pones dataReader["id"].ToString(), etc, etc.
-
-		dataReader.Close();
-		dbConnection.Close();
-
-		//listStore.AppendValues("1", "Nombre 1", "1.5", "1");
+		ApplicationContext.Instance.DbConnection = new NpgsqlConnection(connectionString);
+		dbConnection = ApplicationContext.Instance.DbConnection;
+		dbConnection.Open ();
+		
+		IDbCommand dbCommand = dbConnection.CreateCommand ();
+		dbCommand.CommandText = 
+			"select a.id, a.nombre, a.precio, c.nombre as categoria " +
+			"from articulo a left join categoria c " +
+			"on a.categoria = c.id";
+		
+		IDataReader dataReader = dbCommand.ExecuteReader ();
+		
+		TreeViewExtensions.Fill (treeView, dataReader);
+		dataReader.Close ();
+		
+		dataReader = dbCommand.ExecuteReader ();
+		TreeViewExtensions.Fill (treeView, dataReader);
+		dataReader.Close ();
+		
 	}
-
+	
 	protected void OnDeleteEvent (object sender, DeleteEventArgs a)
 	{
+		dbConnection.Close ();
+
 		Application.Quit ();
 		a.RetVal = true;
+	}
+
+	protected void OnClearActionActivated (object sender, System.EventArgs e)
+	{
+		ListStore listStore = (ListStore)treeView.Model;
+		listStore.Clear ();
+	}
+
+	protected void OnEditActionActivated (object sender, System.EventArgs e)
+	{
+		showArticulo ( getSelectedId() );
+	}
+	
+	private long getSelectedId() {
+		TreeIter treeIter;
+		treeView.Selection.GetSelected(out treeIter);
+		
+		ListStore listStore = (ListStore)treeView.Model;
+		return long.Parse (listStore.GetValue (treeIter, 0).ToString ()); 
+	}
+
+	protected void OnNewActionActivated (object sender, System.EventArgs e)
+	{
+		showArticulo (0); 
+	}
+	
+	private void showArticulo(long id)
+	{
+		ArticuloView articuloView = new ArticuloView( id );
+		articuloView.Show ();
 	}
 }
