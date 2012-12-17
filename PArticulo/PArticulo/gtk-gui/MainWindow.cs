@@ -7,6 +7,7 @@ public partial class MainWindow
 	private global::Gtk.Action clearAction;
 	private global::Gtk.Action editAction;
 	private global::Gtk.Action newAction;
+	private global::Gtk.Action RefreshAction;
 	private global::Gtk.VBox vbox1;
 	private global::Gtk.Toolbar toolbar1;
 	private global::Gtk.ScrolledWindow GtkScrolledWindow;
@@ -27,6 +28,9 @@ public partial class MainWindow
 		this.newAction = new global::Gtk.Action ("newAction", global::Mono.Unix.Catalog.GetString ("_Nuevo"), null, "gtk-new");
 		this.newAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Nuevo");
 		w1.Add (this.newAction, null);
+		this.RefreshAction = new global::Gtk.Action ("RefreshAction", global::Mono.Unix.Catalog.GetString ("_Actualizar"), null, "gtk-refresh");
+		this.RefreshAction.ShortLabel = global::Mono.Unix.Catalog.GetString ("_Actualizar");
+		w1.Add (this.RefreshAction, null);
 		this.UIManager.InsertActionGroup (w1, 0);
 		this.AddAccelGroup (this.UIManager.AccelGroup);
 		this.Name = "MainWindow";
@@ -37,7 +41,7 @@ public partial class MainWindow
 		this.vbox1.Name = "vbox1";
 		this.vbox1.Spacing = 6;
 		// Container child vbox1.Gtk.Box+BoxChild
-		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='newAction' action='newAction'/><toolitem name='editAction' action='editAction'/></toolbar></ui>");
+		this.UIManager.AddUiFromString ("<ui><toolbar name='toolbar1'><toolitem name='clearAction' action='clearAction'/><toolitem name='newAction' action='newAction'/><toolitem name='editAction' action='editAction'/><toolitem name='RefreshAction' action='RefreshAction'/></toolbar></ui>");
 		this.toolbar1 = ((global::Gtk.Toolbar)(this.UIManager.GetWidget ("/toolbar1")));
 		this.toolbar1.Name = "toolbar1";
 		this.toolbar1.ShowArrow = false;

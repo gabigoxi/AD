@@ -72,5 +72,11 @@ public partial class MainWindow: Gtk.Window
 	{
 		ArticuloView articuloView = new ArticuloView( id );
 		articuloView.Show ();
+	
 	}
-}
+	//protected void OnRefreshActionActivated (object sender, System.EventArgs e)
+	//{
+		//refresh();
+	}
+	
+//}
