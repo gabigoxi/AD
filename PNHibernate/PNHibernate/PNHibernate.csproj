@@ -77,9 +77,7 @@
     <Compile Include="Main.cs" />
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Categoria.cs" />
-    <Compile Include="gtk-gui\PNHibernate.Categoria.cs" />
     <Compile Include="Articulo.cs" />
-    <Compile Include="gtk-gui\Serpis.Ad.Articulo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
