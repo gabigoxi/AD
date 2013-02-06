@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{C5937F37-ED56-4392-ACB5-D1A596CCFB6C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PNHibernate</RootNamespace>
+    <RootNamespace>Serpis.Ad</RootNamespace>
     <AssemblyName>PNHibernate</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
@@ -60,11 +60,15 @@
     <Reference Include="NHibernate">
       <HintPath>..\..\Escritorio\NHibernate-3.3.2.GA-bin\Required_Bins\NHibernate.dll</HintPath>
     </Reference>
+    <Reference Include="Npgsql">
+      <HintPath>..\..\..\..\usr\lib\mono\4.0\Npgsql.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="gtk-gui\gui.stetic">
       <LogicalName>gui.stetic</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Articulo.hbm.xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="gtk-gui\generated.cs" />
@@ -74,6 +78,8 @@
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="Categoria.cs" />
     <Compile Include="gtk-gui\PNHibernate.Categoria.cs" />
+    <Compile Include="Articulo.cs" />
+    <Compile Include="gtk-gui\Serpis.Ad.Articulo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

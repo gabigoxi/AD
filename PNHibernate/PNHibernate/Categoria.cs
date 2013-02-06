@@ -1,18 +1,18 @@
 using System;
-using Gtk;
 
-namespace PNHibernate
+namespace Serpis.Ad
 {
-		public class Categoria {
-		
-		public long Id {get; set;}
-		public string Nombre {get; set;}
+	public class Categoria
+	{
+		public virtual long Id {get; set;}
+		public virtual string Nombre {get; set;}
 		
 		//private string nombre;
-		//private string Nombre {
+		//public string Nombre {
 		//	get {return nombre;}
-		//	set {nombre = ValueType;}
-	
-		}
+		//	set {nombre = value;}
+		//}
+
 	}
+}
 
