@@ -12,7 +12,12 @@ namespace Serpis.Ad
 		//	get {return nombre;}
 		//	set {nombre = value;}
 		//}
-
+		
+		public override string ToString ()
+		{
+			return string.Format ("[Categoria: Id={0}, Nombre={1}]", Id, Nombre);
+		}
+		
 	}
 }
 
